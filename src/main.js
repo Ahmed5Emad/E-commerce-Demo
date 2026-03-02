@@ -1,12 +1,3 @@
-async function fetchProducts() {
-  try {
-    const response = await fetch('http://localhost:3001/api/products');
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    return [];
-  }
-}
 
 function renderHeader() {
   return `
@@ -68,25 +59,27 @@ function renderOffer() {
 
 function renderProductCard(product) {
   return `
-    <div class="product-card">
-      <div class="product-image-container">
-        <img src="${product.image}" alt="" onerror="this.style.opacity='0'">
-        <button class="favorite-btn">
-          <i data-lucide="heart" class="icon-heart"></i>
-        </button>
-      </div>
-      <div class="product-info">
-        <p class="product-price">${product.price}$</p>
-        <div class="product-rating">
-          <i data-lucide="star" class="icon-star"></i>
-          <span>${product.rating || '4.5'}</span>
+    <a class="product-card-link" href="/src/pages/Item-Details/Item-Details.html?id=${product.id}">
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="${product.image}" alt="" onerror="this.style.opacity='0'">
+          <button class="favorite-btn">
+            <i data-lucide="heart" class="icon-heart"></i>
+          </button>
+        </div>
+        <div class="product-info">
+          <p class="product-price">${product.price}$</p>
+          <div class="product-rating">
+            <i data-lucide="star" class="icon-star"></i>
+            <span>${product.rating || '4.5'}</span>
+          </div>
+        </div>
+        <div class="product-footer">
+          <p class="product-name" title="${product.name}">${product.name}</p>
+          <button class="add-to-cart" onclick="event.preventDefault()">Add to cart</button>
         </div>
       </div>
-      <div class="product-footer">
-        <p class="product-name" title="${product.name}">${product.name}</p>
-        <button class="add-to-cart">Add to cart</button>
-      </div>
-    </div>
+    </a>
   `;
 }
 
@@ -104,7 +97,10 @@ function renderSection(title, products) {
 
 async function init() {
   const app = document.getElementById('app');
-  const products = await fetchProducts();
+
+  // Load products directly from the JSON data file
+  const res = await fetch('/Server/data.json');
+  const products = await res.json();
 
   const fashionProducts = products.filter(p => p.tags.includes('Apparel') || p.tags.includes('Dress') || p.tags.includes('Cotton'));
   const shoeProducts = products.filter(p => p.tags.includes('Footwear'));
@@ -120,7 +116,7 @@ async function init() {
     ${renderSection('Trending Shoes', trendingShoes)}
   `;
 
-  // Initialize Lucide icons
+  // Initialize Lucide icons (lucide global is set by CDN script in index.html)
   lucide.createIcons();
 }
 
