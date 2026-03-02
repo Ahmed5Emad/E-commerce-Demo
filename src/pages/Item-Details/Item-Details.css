@@ -182,7 +182,8 @@
 /* Color swatches */
 .color-swatches {
   display: flex;
-  gap: 8px;
+  padding: 6px;
+  gap: 18px;
   align-items: center;
 }
 

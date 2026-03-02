@@ -1,18 +1,11 @@
-// ============================================================
-// Item Details Page
-// ============================================================
 
-
-
-function renderBackLink() {
-  return `<a href="/index.html" class="back-link"><i data-lucide="arrow-left"></i> Back to Home</a>`;
-}
-
-// ---- Header (reused from main style) ----
 function renderHeader() {
   return `
     <header class="header">
-      <div class="logo">LOGO</div>
+      <div class="logo" >
+      <a href="/src/index.html" style="text-decoration: none;">LOGO
+      </a>
+      </div>
       <div class="search-bar">
         <div class="icon-btn">
           <i data-lucide="search" class="icon-search"></i>
@@ -36,8 +29,7 @@ function renderHeader() {
           <i data-lucide="user" class="icon-profile"></i>
         </div>
         <div class="profile-info">
-          <small style="font-size:11px;color:#888;">Welcome Back</small>
-          <span>Mohamed Ehab</span>
+          <span>Welcome Mohamed Ehab</span>
         </div>
         <div style="margin-left: 5px;">
           <i data-lucide="chevron-down" class="icon-arrow"></i>
@@ -319,7 +311,6 @@ async function init() {
   ];
 
   app.innerHTML = `
-    ${renderBackLink()}
     ${renderHeader()}
     ${renderItemDetail(product)}
     ${renderRelatedItems(related)}
