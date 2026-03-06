@@ -53,7 +53,7 @@ function renderOffer() {
       </div>
       <div class="offer-image">
         <div class="offer-image-inner">
-          <img src="/src/assets/offer-people.png" alt="Offer Image">
+          <img src="./src/assets/offer-people.png" alt="Offer Image">
         </div>
       </div>
     </section>
@@ -62,7 +62,7 @@ function renderOffer() {
 
 function renderProductCard(product) {
   return `
-    <a class="product-card-link" href="/src/pages/Item-Details/Item-Details.html?id=${product.id}">
+    <a class="product-card-link" href="./src/pages/Item-Details/Item-Details.html?id=${product.id}">
       <div class="product-card">
         <div class="product-image-container">
           <img src="${product.image}" alt="" onerror="this.style.opacity='0'">

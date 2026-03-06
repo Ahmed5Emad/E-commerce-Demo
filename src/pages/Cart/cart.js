@@ -79,6 +79,7 @@ function renderCartItem(item) {
           <div class="brand-logo">
              <img src="../../assets/offer-people.png" alt="brand" style="width: 100%; height: 100%; border-radius: 50%;">
           </div>
+
         </div>
         <div class="item-details">
           <h3 class="item-name">${item.name}</h3>

@@ -163,7 +163,7 @@ function renderItemDetail(product) {
 // ---- Related Product Card (compact) ----
 function renderRelatedCard(product) {
   return `
-    <a class="product-card-link" href="/src/pages/Item-Details/Item-Details.html?id=${product.id}">
+    <a class="product-card-link" href="./Item-Details.html?id=${product.id}">
       <div class="product-card">
         <div class="product-image-container">
           <img src="${product.image}" alt="${product.name}" onerror="this.style.opacity='0'">
@@ -338,7 +338,7 @@ async function init() {
   const app = document.getElementById('app');
 
   // Load products directly from public/data.json
-  const res = await fetch('./data.json');
+  const res = await fetch('../../../data.json');
   const products = await res.json();
 
   // Read product ID from URL: ?id=3
@@ -355,13 +355,13 @@ async function init() {
   const reviews = [
     {
       name: 'assistant',
-      avatar: './src/assets/offer-people.png',
+      avatar: '../../assets/offer-people.png',
       rating: 5,
       text: 'Very Good Product',
     },
     {
       name: 'assistant',
-      avatar: './src/assets/offer-people.png',
+      avatar: '../../assets/offer-people.png',
       rating: 5,
       text: 'Very Good Product',
     },
