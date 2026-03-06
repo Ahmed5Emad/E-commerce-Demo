@@ -140,7 +140,26 @@ body {
 }
 
 .profile-info {
-  display: none; 
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.welcome-text {
+  font-size: 11px;
+  color: var(--gray-text);
+}
+
+.user-name {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 
@@ -448,13 +467,72 @@ body {
   }
 }
 
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: white;
+  color: var(--text);
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 2000;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border: 1px solid rgba(31, 84, 235, 0.1);
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-message {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+/* Empty State Design */
+.empty-state-visual {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.empty-state-visual img {
+  width: 100%;
+  height: auto;
+}
+
+.no-orders-text {
+  font-size: 60px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: -20px;
+}
+
 /* Small Mobile */
 @media (max-width: 480px) {
   .container {
     gap: 15px;
   }
   .product-grid {
-    grid-template-columns: 1fr; /* Single column on very small screens */
+    grid-template-columns: 1fr;
   }
   .offer-content h2 {
     font-size: 28px;

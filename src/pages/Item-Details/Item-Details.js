@@ -2,9 +2,8 @@
 function renderHeader() {
   return `
     <header class="header">
-      <div class="logo" >
-      <a href="/src/index.html" style="text-decoration: none;">LOGO
-      </a>
+      <div class="logo">
+        <a href="/index.html" style="text-decoration: none; color: inherit;">LOGO</a>
       </div>
       <div class="search-bar">
         <div class="icon-btn">
@@ -16,9 +15,9 @@ function renderHeader() {
         <div class="icon-btn">
           <i data-lucide="heart" class="icon-nav"></i>
         </div>
-        <div class="icon-btn">
+        <a href="/src/pages/Cart/cart.html" class="icon-btn" style="color: inherit;">
           <i data-lucide="shopping-cart" class="icon-nav"></i>
-        </div>
+        </a>
         <div class="icon-btn">
           <i data-lucide="bell" class="icon-nav"></i>
           <div class="notification-badge"></div>
@@ -29,9 +28,10 @@ function renderHeader() {
           <i data-lucide="user" class="icon-profile"></i>
         </div>
         <div class="profile-info">
-          <span>Welcome Mohamed Ehab</span>
-        </div>
-        <div style="margin-left: 5px;">
+          <div class="profile-text">
+            <span class="welcome-text">Welcome Back</span>
+            <span class="user-name">Mohamed Ehab</span>
+          </div>
           <i data-lucide="chevron-down" class="icon-arrow"></i>
         </div>
       </div>
@@ -276,6 +276,63 @@ function attachInteractivity() {
   });
 }
 
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const badge = document.querySelector('.notification-badge');
+  if (badge) {
+    badge.style.display = cart.length > 0 ? 'block' : 'none';
+  }
+}
+
+function showToast(message) {
+  let toast = document.querySelector('.toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i>
+    </div>
+    <span class="toast-message">${message}</span>
+  `;
+  
+  lucide.createIcons();
+  
+  // Show toast
+  setTimeout(() => toast.classList.add('show'), 10);
+  
+  // Hide toast after 3s
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+function addToCart(product, selectedColor, selectedSize) {
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  
+  // Create a unique key for the item based on ID, color, and size
+  const cartItemId = `${product.id}-${selectedColor}-${selectedSize}`;
+  
+  const existing = cart.find(item => item.cartItemId === cartItemId);
+  if (existing) {
+    existing.quantity = (existing.quantity || 1) + 1;
+  } else {
+    cart.push({ 
+      ...product, 
+      cartItemId,
+      selectedColor, 
+      selectedSize, 
+      quantity: 1 
+    });
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartBadge();
+  showToast(`${product.name} (${selectedColor}, ${selectedSize}) added to cart!`);
+}
+
 // ---- INIT ----
 async function init() {
   const app = document.getElementById('app');
@@ -319,9 +376,31 @@ async function init() {
 
   // Initialize Lucide icons (lucide global is set by CDN script in Item-Details.html)
   lucide.createIcons();
+  updateCartBadge();
 
   // Attach interactive behaviour
   attachInteractivity();
+
+  // Add to cart listeners
+  document.querySelector('.btn-add-cart')?.addEventListener('click', () => {
+    const selectedColor = document.querySelector('.color-swatch.active')?.dataset.color || product.colors[0];
+    const selectedSize = document.querySelector('.size-btn.active')?.dataset.size || 'M';
+    addToCart(product, selectedColor, selectedSize);
+  });
+  
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const card = btn.closest('.product-card-link');
+      const url = new URL(card.href);
+      const prodId = parseInt(url.searchParams.get('id'));
+      const prod = products.find(p => p.id === prodId);
+      if (prod) {
+        // Default choices for quick add
+        addToCart(prod, prod.colors[0], 'M');
+      }
+    });
+  });
 }
 
 init();

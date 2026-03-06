@@ -2,7 +2,9 @@
 function renderHeader() {
   return `
     <header class="header">
-      <div class="logo">LOGO</div>
+      <div class="logo">
+        <a href="/index.html" style="text-decoration: none; color: inherit;">LOGO</a>
+      </div>
       <div class="search-bar">
         <div class="icon-btn">
           <i data-lucide="search" class="icon-search"></i>
@@ -13,9 +15,9 @@ function renderHeader() {
         <div class="icon-btn">
           <i data-lucide="heart" class="icon-nav"></i>
         </div>
-        <div class="icon-btn">
+        <a href="/src/pages/Cart/cart.html" class="icon-btn" style="color: inherit;">
           <i data-lucide="shopping-cart" class="icon-nav"></i>
-        </div>
+        </a>
         <div class="icon-btn">
           <i data-lucide="bell" class="icon-nav"></i>
           <div class="notification-badge"></div>
@@ -26,9 +28,10 @@ function renderHeader() {
           <i data-lucide="user" class="icon-profile"></i>
         </div>
         <div class="profile-info">
-          <span>Welcome Mohamed Ehab</span>
-        </div>
-        <div style="margin-left: 5px;">
+          <div class="profile-text">
+            <span class="welcome-text">Welcome Back</span>
+            <span class="user-name">Mohamed Ehab</span>
+          </div>
           <i data-lucide="chevron-down" class="icon-arrow"></i>
         </div>
       </div>
@@ -95,6 +98,63 @@ function renderSection(title, products) {
   `;
 }
 
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const badge = document.querySelector('.notification-badge');
+  if (badge) {
+    badge.style.display = cart.length > 0 ? 'block' : 'none';
+  }
+}
+
+function showToast(message) {
+  let toast = document.querySelector('.toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i>
+    </div>
+    <span class="toast-message">${message}</span>
+  `;
+  
+  lucide.createIcons();
+  
+  // Show toast
+  setTimeout(() => toast.classList.add('show'), 10);
+  
+  // Hide toast after 3s
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+function addToCart(product, selectedColor, selectedSize) {
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  
+  // Create a unique key for the item based on ID, color, and size
+  const cartItemId = `${product.id}-${selectedColor}-${selectedSize}`;
+  
+  const existing = cart.find(item => item.cartItemId === cartItemId);
+  if (existing) {
+    existing.quantity = (existing.quantity || 1) + 1;
+  } else {
+    cart.push({ 
+      ...product, 
+      cartItemId,
+      selectedColor, 
+      selectedSize, 
+      quantity: 1 
+    });
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartBadge();
+  showToast(`${product.name} (${selectedColor}, ${selectedSize}) added to cart!`);
+}
+
 async function init() {
   const app = document.getElementById('app');
 
@@ -118,6 +178,22 @@ async function init() {
 
   // Initialize Lucide icons (lucide global is set by CDN script in index.html)
   lucide.createIcons();
+  updateCartBadge();
+
+  // Add listeners for add to cart buttons
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const card = btn.closest('.product-card-link');
+      const url = new URL(card.href);
+      const id = parseInt(url.searchParams.get('id'));
+      const product = products.find(p => p.id === id);
+      if (product) {
+        // Default choices for quick add on home page
+        addToCart(product, product.colors[0], 'M');
+      }
+    });
+  });
 }
 
 init();

@@ -302,8 +302,9 @@
 }
 
 .btn-add-cart:hover {
-  background: var(--text);
-  color: white;
+  background: rgba(31, 84, 235, 0.05);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .btn-buy-now {
@@ -317,12 +318,12 @@
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
   text-align: center;
 }
 
 .btn-buy-now:hover {
-  background: var(--secondary);
+  background: #1743C4;
 }
 
 /* ===== Related Items ===== */
