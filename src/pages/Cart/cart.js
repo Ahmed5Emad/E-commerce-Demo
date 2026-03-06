@@ -76,7 +76,7 @@ function renderCartItem(item) {
         <div class="item-image-container">
           <img src="${item.image}" alt="${item.name}">
           <div class="brand-logo">
-             <img src="/src/assets/offer-people.png" alt="brand" style="width: 100%; height: 100%; border-radius: 50%;">
+             <img src="../../assets/offer-people.png" alt="brand" style="width: 100%; height: 100%; border-radius: 50%;">
           </div>
         </div>
         <div class="item-details">
@@ -114,7 +114,7 @@ function renderEmptyCart() {
     </div>
     <div class="empty-cart-container" style="padding: 50px 0;">
       <div class="empty-state-visual" style="max-width: 516px; margin: 0 auto;">
-        <img src="/src/assets/no-orders.png" alt="No orders" style="width: 100%; height: auto;">
+        <img src="../../assets/no-orders.png" alt="No orders" style="width: 100%; height: auto;">
       </div>
       <button class="btn-continue-shopping" onclick="window.location.href='/index.html'" style="margin-top: 20px; padding: 15px 40px; border-radius: 40px; background: var(--primary); color: white; border: none; font-size: 24px; font-weight: 700; cursor: pointer;">Start Shopping</button>
     </div>

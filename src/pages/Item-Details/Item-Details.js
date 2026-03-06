@@ -337,8 +337,8 @@ function addToCart(product, selectedColor, selectedSize) {
 async function init() {
   const app = document.getElementById('app');
 
-  // Load products directly from the JSON data file
-  const res = await fetch('/Server/data.json');
+  // Load products directly from public/data.json
+  const res = await fetch('./data.json');
   const products = await res.json();
 
   // Read product ID from URL: ?id=3
@@ -355,13 +355,13 @@ async function init() {
   const reviews = [
     {
       name: 'assistant',
-      avatar: '/src/assets/offer-people.png',
+      avatar: './src/assets/offer-people.png',
       rating: 5,
       text: 'Very Good Product',
     },
     {
       name: 'assistant',
-      avatar: '/src/assets/offer-people.png',
+      avatar: './src/assets/offer-people.png',
       rating: 5,
       text: 'Very Good Product',
     },
