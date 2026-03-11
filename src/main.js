@@ -1,4 +1,3 @@
-
 function renderHeader() {
   return `
     <header class="header">
@@ -9,7 +8,7 @@ function renderHeader() {
         <div class="icon-btn">
           <i data-lucide="search" class="icon-search"></i>
         </div>
-        <input type="text" placeholder="Search for clothes and shoes">
+        <input id="searchInput" type="text" placeholder="Search for clothes and shoes">
       </div>
       <div class="nav-icons">
         <div class="icon-btn">
@@ -113,58 +112,64 @@ function showToast(message) {
     toast.className = 'toast';
     document.body.appendChild(toast);
   }
-  
+
   toast.innerHTML = `
     <div class="toast-icon">
       <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i>
     </div>
     <span class="toast-message">${message}</span>
   `;
-  
+
   lucide.createIcons();
-  
-  // Show toast
+
   setTimeout(() => toast.classList.add('show'), 10);
-  
-  // Hide toast after 3s
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 3000);
+  setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 function addToCart(product, selectedColor, selectedSize) {
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  
-  // Create a unique key for the item based on ID, color, and size
   const cartItemId = `${product.id}-${selectedColor}-${selectedSize}`;
-  
   const existing = cart.find(item => item.cartItemId === cartItemId);
+
   if (existing) {
     existing.quantity = (existing.quantity || 1) + 1;
   } else {
-    cart.push({ 
-      ...product, 
+    cart.push({
+      ...product,
       cartItemId,
-      selectedColor, 
-      selectedSize, 
-      quantity: 1 
+      selectedColor,
+      selectedSize,
+      quantity: 1
     });
   }
+
   localStorage.setItem('cart', JSON.stringify(cart));
   updateCartBadge();
   showToast(`${product.name} (${selectedColor}, ${selectedSize}) added to cart!`);
 }
 
+function renderSearchResults(list, products) {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    ${renderHeader()}
+    ${renderOffer()}
+    ${renderSection('Search Results', list)}
+  `;
+
+  lucide.createIcons();
+  updateCartBadge();
+}
+
+// ======= init =======
 async function init() {
   const app = document.getElementById('app');
 
-  // Load products directly from public/data.json
   const res = await fetch('./data.json');
   const products = await res.json();
 
   const fashionProducts = products.filter(p => p.tags.includes('Apparel') || p.tags.includes('Dress') || p.tags.includes('Cotton'));
   const shoeProducts = products.filter(p => p.tags.includes('Footwear'));
-  const trendingProducts = products.slice(0, 4); // First 4 as trending for demo
+  const trendingProducts = products.slice(0, 4);
   const trendingShoes = shoeProducts.slice(0, 4);
 
   app.innerHTML = `
@@ -176,11 +181,9 @@ async function init() {
     ${renderSection('Trending Shoes', trendingShoes)}
   `;
 
-  // Initialize Lucide icons (lucide global is set by CDN script in index.html)
   lucide.createIcons();
   updateCartBadge();
 
-  // Add listeners for add to cart buttons
   document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -188,11 +191,19 @@ async function init() {
       const url = new URL(card.href);
       const id = parseInt(url.searchParams.get('id'));
       const product = products.find(p => p.id === id);
-      if (product) {
-        // Default choices for quick add on home page
-        addToCart(product, product.colors[0], 'M');
-      }
+      if (product) addToCart(product, product.colors[0], 'M');
     });
+  });
+
+  
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase();
+    const filtered = products.filter(product =>
+      product.name.toLowerCase().includes(value) ||
+      product.tags.some(tag => tag.toLowerCase().includes(value))
+    );
+    renderSearchResults(filtered, products);
   });
 }
 
