@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up – New Clothes</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/src/pages/Signup/signup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for eye icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="signup-body">
+
+    <!-- Top header bar -->
+    <!-- <header class="signup-header">
+      <span class="signup-header-title">Sign Up</span>
+    </header> -->
+
+    <!-- Main two-column layout -->
+    <main class="signup-main">
+      <div class="signup-container">
+
+        <!-- Left column – illustration -->
+        <div class="signup-illustration-col">
+          <img
+            src="https://cdni.iconscout.com/illustration/premium/thumb/mobile-security-3480483-2912485.png"
+            alt="Mobile security and biometrics illustration"
+            class="signup-illustration"
+            onerror="this.src='https://cdni.iconscout.com/illustration/premium/thumb/login-page-4468581-3783954.png'"
+          />
+        </div>
+
+        <!-- Right column – sign-up card -->
+        <div class="signup-form-col">
+          <div class="signup-card">
+
+            <h2 class="signup-title">Create Account</h2>
+            <p class="signup-subtitle">Create an account so you can explore all the existing items</p>
+
+            <form id="signup-form" novalidate>
+
+              <!-- Name -->
+              <div class="signup-input-group">
+                <input
+                  type="text"
+                  id="signup-name"
+                  name="name"
+                  placeholder="Name"
+                  class="signup-input signup-input--active"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+
+              <!-- Username -->
+              <div class="signup-input-group">
+                <input
+                  type="text"
+                  id="signup-username"
+                  name="username"
+                  placeholder="Username"
+                  class="signup-input"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+
+              <!-- Email -->
+              <div class="signup-input-group">
+                <input
+                  type="email"
+                  id="signup-email"
+                  name="email"
+                  placeholder="Email"
+                  class="signup-input"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+
+              <!-- Phone Number -->
+              <div class="signup-input-group">
+                <input
+                  type="tel"
+                  id="signup-phone"
+                  name="phone"
+                  placeholder="Phone Number"
+                  class="signup-input"
+                  autocomplete="tel"
+                />
+              </div>
+
+              <!-- Password -->
+              <div class="signup-input-group signup-input-group--icon">
+                <input
+                  type="password"
+                  id="signup-password"
+                  name="password"
+                  placeholder="Password"
+                  class="signup-input"
+                  autocomplete="new-password"
+                  required
+                />
+                <button type="button" class="eye-toggle" id="toggle-password" aria-label="Toggle password visibility">
+                  <i class="fa-regular fa-eye-slash"></i>
+                </button>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="signup-input-group signup-input-group--icon">
+                <input
+                  type="password"
+                  id="signup-confirm-password"
+                  name="confirm-password"
+                  placeholder="Confirm Password"
+                  class="signup-input"
+                  autocomplete="new-password"
+                  required
+                />
+                <button type="button" class="eye-toggle" id="toggle-confirm-password" aria-label="Toggle confirm password visibility">
+                  <i class="fa-regular fa-eye-slash"></i>
+                </button>
+              </div>
+
+              <!-- Role radio buttons -->
+              <div class="signup-role-row">
+                <label class="signup-radio-label">
+                  <input type="radio" name="role" value="user" checked />
+                  <span class="signup-radio-custom"></span>
+                  User
+                </label>
+                <label class="signup-radio-label">
+                  <input type="radio" name="role" value="store" />
+                  <span class="signup-radio-custom"></span>
+                  Store
+                </label>
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" class="btn-signup">Sign up</button>
+
+            </form>
+
+            <!-- Footer -->
+            <p class="signup-footer-text">
+              Already have an account? <a href="../Login/login.html" class="link-signin">Sign in</a>
+            </p>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <script type="module" src="/src/pages/Signup/signup.js"></script>
+  </body>
+</html>

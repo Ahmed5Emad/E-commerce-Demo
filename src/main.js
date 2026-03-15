@@ -34,8 +34,53 @@ function renderHeader() {
           <i data-lucide="chevron-down" class="icon-arrow"></i>
         </div>
       </div>
+      <!-- Auth buttons — visibility toggled by initNavAuth() -->
+      <div class="nav-auth-btns" id="nav-auth-btns">
+        <a href="./src/pages/Login/login.html"  class="btn-nav-login"  id="btn-nav-login">Login</a>
+        <a href="./src/pages/Signup/signup.html" class="btn-nav-signup" id="btn-nav-signup">Sign Up</a>
+        <button class="btn-nav-logout" id="btn-nav-logout" style="display:none;">Logout</button>
+      </div>
     </header>
   `;
+}
+
+/** Show/hide Login+SignUp vs Logout based on localStorage auth state. */
+function initNavAuth() {
+  const loggedIn = localStorage.getItem('loggedIn') === 'true';
+  const loginBtn  = document.getElementById('btn-nav-login');
+  const signupBtn = document.getElementById('btn-nav-signup');
+  const logoutBtn = document.getElementById('btn-nav-logout');
+  if (!loginBtn) return;
+
+  if (loggedIn) {
+    loginBtn.style.display  = 'none';
+    signupBtn.style.display = 'none';
+    logoutBtn.style.display = '';
+
+    // Update profile text from stored user
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const displayName = user.username || user.email || 'User';
+    const welcomeEl = document.querySelector('.welcome-text');
+    const nameEl    = document.querySelector('.user-name');
+    if (welcomeEl) welcomeEl.textContent = 'Welcome Back';
+    if (nameEl)    nameEl.textContent    = displayName;
+  } else {
+    loginBtn.style.display  = '';
+    signupBtn.style.display = '';
+    logoutBtn.style.display = 'none';
+
+    // Not logged in — clear name/greet
+    const welcomeEl = document.querySelector('.welcome-text');
+    const nameEl    = document.querySelector('.user-name');
+    if (welcomeEl) welcomeEl.textContent = 'Hello,';
+    if (nameEl)    nameEl.textContent    = 'Guest';
+  }
+
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('user');
+    window.location.href = './src/pages/Login/login.html';
+  });
 }
 
 function renderOffer() {
@@ -183,15 +228,26 @@ async function init() {
 
   lucide.createIcons();
   updateCartBadge();
+  initNavAuth();
 
   document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+
+      // ── Auth Guard ──────────────────────────────────────────
+      if (localStorage.getItem('loggedIn') !== 'true') {
+        showToast('Please log in to add items to your cart.');
+        setTimeout(() => { window.location.href = './src/pages/Login/login.html'; }, 1500);
+        return;
+      }
+
       const card = btn.closest('.product-card-link');
       const url = new URL(card.href);
       const id = parseInt(url.searchParams.get('id'));
       const product = products.find(p => p.id === id);
-      if (product) addToCart(product, product.colors[0], 'M');
+      if (product) {
+        addToCart(product, product.colors[0], 'M');
+      }
     });
   });
 

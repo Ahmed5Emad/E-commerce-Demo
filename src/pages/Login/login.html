@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login – New Clothes</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/src/pages/Login/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="login-body">
+
+    <!-- Top header bar -->
+    <!-- <header class="login-header">
+      <a href="../../../index.html" class="login-header-logo">LOGO</a>
+      <span class="login-header-title">Login</span>
+    </header> -->
+
+    <!-- Main two-column layout -->
+    <main class="login-main">
+      <div class="login-container">
+
+        <!-- Left column – illustration -->
+        <div class="login-illustration-col">
+          <img
+            src="https://cdni.iconscout.com/illustration/premium/thumb/login-page-4468581-3783954.png"
+            alt="Security illustration"
+            class="login-illustration"
+            onerror="this.src='https://via.placeholder.com/480x400?text=Illustration'"
+          />
+        </div>
+
+        <!-- Right column – login card -->
+        <div class="login-form-col">
+          <div class="login-card">
+
+            <h2 class="login-title">Login here</h2>
+            <p class="login-subtitle">Welcome back you've been missed!</p>
+
+            <form id="login-form" novalidate>
+
+              <!-- Email -->
+              <div class="input-group">
+                <input
+                  type="email"
+                  id="login-email"
+                  name="email"
+                  placeholder="Email"
+                  class="login-input login-input--email"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+
+              <!-- Password -->
+              <div class="input-group">
+                <input
+                  type="password"
+                  id="login-password"
+                  name="password"
+                  placeholder="Password"
+                  class="login-input login-input--password"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+
+              <!-- Forgot password -->
+              <div class="forgot-row">
+                <a href="#" id="forgot-link" class="forgot-link">Forgot your password?</a>
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" class="btn-signin">Sign in</button>
+
+            </form>
+
+            <!-- Footer -->
+            <p class="login-footer-text">
+              Create new account? <a href="../Signup/signup.html" class="link-signup">Sign up</a>
+            </p>
+
+            <!-- Social login divider -->
+            <div class="social-divider">
+              <span>Or continue with</span>
+            </div>
+
+            <div class="social-buttons">
+              <button class="social-btn" aria-label="Continue with Google">
+                <i class="fa-brands fa-google"></i>
+              </button>
+              <button class="social-btn" aria-label="Continue with Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+              </button>
+              <button class="social-btn" aria-label="Continue with Apple">
+                <i class="fa-brands fa-apple"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <script type="module" src="/src/pages/Login/login.js"></script>
+  </body>
+</html>

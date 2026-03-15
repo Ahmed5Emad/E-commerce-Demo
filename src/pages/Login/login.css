@@ -1,0 +1,329 @@
+/* ======================================================
+   LOGIN PAGE – login.css
+   ====================================================== */
+
+/* ---------- Reset / base for this page ---------- */
+.login-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #f4f5f7;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Top header bar ---------- */
+.login-header {
+  width: 100%;
+  background: #1e1e2e;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.login-header-logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.login-header-logo:hover {
+  opacity: 1;
+}
+
+.login-header-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #c8c8d4;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Main centring area ---------- */
+.login-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+}
+
+/* ---------- Two-column container ---------- */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border: 1px solid #e0e4ea;
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  min-height: 520px;
+}
+
+/* ---------- Left – illustration ---------- */
+.login-illustration-col {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  background: #f0f4ff;
+  border-right: 1px solid #e0e4ea;
+  min-height: 520px;
+}
+
+.login-illustration {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(63, 107, 240, 0.12));
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ---------- Right – form column ---------- */
+.login-form-col {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  min-height: 520px;
+}
+
+/* ---------- Login card ---------- */
+.login-card {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Heading */
+.login-title {
+  margin: 0 0 6px;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #2b52d8;
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+.login-subtitle {
+  margin: 0 0 28px;
+  font-size: 0.82rem;
+  color: #555b6e;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ---------- Input groups ---------- */
+.input-group {
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.login-input {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #222;
+  background: #e8edf8;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+/* Email – blue border highlight */
+.login-input--email {
+  border: 1.5px solid #3f6bf0;
+}
+
+.login-input--email:focus {
+  border-color: #1e45c8;
+  box-shadow: 0 0 0 3px rgba(63, 107, 240, 0.15);
+  background: #eef1fb;
+}
+
+/* Password – no visible border */
+.login-input--password {
+  border: 1.5px solid transparent;
+}
+
+.login-input--password:focus {
+  border-color: #3f6bf0;
+  box-shadow: 0 0 0 3px rgba(63, 107, 240, 0.12);
+  background: #eef1fb;
+}
+
+.login-input::placeholder {
+  color: #8a94a8;
+}
+
+/* ---------- Forgot password link ---------- */
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.forgot-link {
+  font-size: 0.78rem;
+  color: #2b52d8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  color: #1a3baa;
+  text-decoration: underline;
+}
+
+/* ---------- Sign-in button ---------- */
+.btn-signin {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #2b52d8;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(43, 82, 216, 0.35);
+}
+
+.btn-signin:hover {
+  background: #1a3baa;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(43, 82, 216, 0.45);
+}
+
+.btn-signin:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(43, 82, 216, 0.3);
+}
+
+/* ---------- Footer text ---------- */
+.login-footer-text {
+  margin: 20px 0 0;
+  font-size: 0.82rem;
+  color: #555b6e;
+  text-align: center;
+}
+
+.link-signup {
+  color: #2b52d8;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.link-signup:hover {
+  color: #1a3baa;
+  text-decoration: underline;
+}
+
+/* ---------- Social divider ---------- */
+.social-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 16px;
+  color: #9099ad;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #dde2ec;
+}
+
+/* ---------- Social buttons ---------- */
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.social-btn {
+  width: 52px;
+  height: 52px;
+  border: 1.5px solid #e0e4ea;
+  border-radius: 12px;
+  background: #f4f6fc;
+  color: #333;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.social-btn:hover {
+  background: #e8edf8;
+  border-color: #b0bcd8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 82, 216, 0.12);
+}
+
+.social-btn:active {
+  transform: translateY(0);
+}
+
+/* ======================================================
+   Responsive – stack to single column on small screens
+   ====================================================== */
+@media (max-width: 720px) {
+  .login-container {
+    flex-direction: column;
+    border-radius: 16px;
+    min-height: unset;
+  }
+
+  .login-illustration-col {
+    border-right: none;
+    border-bottom: 1px solid #e0e4ea;
+    padding: 32px 24px;
+    min-height: unset;
+  }
+
+  .login-illustration {
+    max-width: 240px;
+  }
+
+  .login-form-col {
+    padding: 32px 24px 40px;
+    min-height: unset;
+  }
+
+  .login-main {
+    padding: 24px 16px;
+  }
+}

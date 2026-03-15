@@ -35,8 +35,46 @@ function renderHeader() {
           <i data-lucide="chevron-down" class="icon-arrow"></i>
         </div>
       </div>
+      <!-- Auth buttons -->
+      <div class="nav-auth-btns" id="nav-auth-btns">
+        <a href="../Login/login.html"  class="btn-nav-login"  id="btn-nav-login">Login</a>
+        <a href="../Signup/signup.html" class="btn-nav-signup" id="btn-nav-signup">Sign Up</a>
+        <button class="btn-nav-logout" id="btn-nav-logout" style="display:none;">Logout</button>
+      </div>
     </header>
   `;
+}
+
+function initNavAuth() {
+  const loggedIn = localStorage.getItem('loggedIn') === 'true';
+  const loginBtn  = document.getElementById('btn-nav-login');
+  const signupBtn = document.getElementById('btn-nav-signup');
+  const logoutBtn = document.getElementById('btn-nav-logout');
+  if (!loginBtn) return;
+  if (loggedIn) {
+    loginBtn.style.display  = 'none';
+    signupBtn.style.display = 'none';
+    logoutBtn.style.display = '';
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const displayName = user.username || user.email || 'User';
+    const welcomeEl = document.querySelector('.welcome-text');
+    const nameEl    = document.querySelector('.user-name');
+    if (welcomeEl) welcomeEl.textContent = 'Welcome Back';
+    if (nameEl)    nameEl.textContent    = displayName;
+  } else {
+    loginBtn.style.display  = '';
+    signupBtn.style.display = '';
+    logoutBtn.style.display = 'none';
+    const welcomeEl = document.querySelector('.welcome-text');
+    const nameEl    = document.querySelector('.user-name');
+    if (welcomeEl) welcomeEl.textContent = 'Hello,';
+    if (nameEl)    nameEl.textContent    = 'Guest';
+  }
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('user');
+    window.location.href = '../Login/login.html';
+  });
 }
 
 // Colour name → hex lookup (extend as needed)
@@ -377,26 +415,49 @@ async function init() {
   // Initialize Lucide icons (lucide global is set by CDN script in Item-Details.html)
   lucide.createIcons();
   updateCartBadge();
+  initNavAuth();
 
   // Attach interactive behaviour
   attachInteractivity();
 
   // Add to cart listeners
   document.querySelector('.btn-add-cart')?.addEventListener('click', () => {
+    if (localStorage.getItem('loggedIn') !== 'true') {
+      showToast('Please log in to add items to your cart.');
+      setTimeout(() => { window.location.href = '../Login/login.html'; }, 1500);
+      return;
+    }
     const selectedColor = document.querySelector('.color-swatch.active')?.dataset.color || product.colors[0];
     const selectedSize = document.querySelector('.size-btn.active')?.dataset.size || 'M';
     addToCart(product, selectedColor, selectedSize);
   });
-  
+
+  // Buy Now
+  document.querySelector('.btn-buy-now')?.addEventListener('click', () => {
+    if (localStorage.getItem('loggedIn') !== 'true') {
+      showToast('Please log in to purchase items.');
+      setTimeout(() => { window.location.href = '../Login/login.html'; }, 1500);
+      return;
+    }
+    const selectedColor = document.querySelector('.color-swatch.active')?.dataset.color || product.colors[0];
+    const selectedSize = document.querySelector('.size-btn.active')?.dataset.size || 'M';
+    addToCart(product, selectedColor, selectedSize);
+    window.location.href = '../Cart/cart.html';
+  });
+
   document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      if (localStorage.getItem('loggedIn') !== 'true') {
+        showToast('Please log in to add items to your cart.');
+        setTimeout(() => { window.location.href = '../Login/login.html'; }, 1500);
+        return;
+      }
       const card = btn.closest('.product-card-link');
       const url = new URL(card.href);
       const prodId = parseInt(url.searchParams.get('id'));
       const prod = products.find(p => p.id === prodId);
       if (prod) {
-        // Default choices for quick add
         addToCart(prod, prod.colors[0], 'M');
       }
     });
